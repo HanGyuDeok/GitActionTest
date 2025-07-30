@@ -7,7 +7,7 @@ function App() {
     return (
         <>
             <h1>React + Vite</h1>
-            <button onClick={() => setCount((count) => count + 1)}>
+            <button onClick={() => setCount((count) => count + 4)}>
                 Count is {count}
             </button>
         </>
