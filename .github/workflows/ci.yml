@@ -1,4 +1,4 @@
-name: React + Vite CI
+name: React + Vite CI/CD
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -31,5 +31,31 @@ jobs:
         run: npm run build
         working-directory: ./my-react-app
 
+      # --------------------- 추가된 부분 시작 ---------------------
+
+      - name: 🐳 Docker 빌드 및 푸시
+        uses: docker/build-push-action@v3
+        with:
+          context: ./my-react-app
+          push: true
+          tags: your-dockerhub-id/your-react-app:${{ github.sha }}
+        # 설명: my-react-app 디렉토리에서 도커 이미지 빌드 후 DockerHub에 푸시합니다.
+        # 'tags'에 커밋 SHA를 넣어 이미지 버전을 고유하게 관리합니다.
+
+      - name: 🔄 Kubernetes 매니페스트 이미지 태그 업데이트 및 커밋
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          # 매니페스트 파일 내 이미지 태그를 최신 커밋 SHA로 변경
+          sed -i "s|image: your-dockerhub-id/your-react-app:.*|image: your-dockerhub-id/your-react-app:${{ github.sha }}|" ./k8s/deployment.yaml
+          git add ./k8s/deployment.yaml
+          git commit -m "ci: update image tag to ${{ github.sha }}"
+          git push
+        # 설명: Kubernetes 매니페스트에 새로운 이미지 태그를 반영하고
+        # 변경사항을 GitHub 저장소에 다시 푸시합니다.
+        # Argo CD가 이를 감지해 자동으로 배포를 수행합니다.
+
+      # --------------------- 추가된 부분 끝 ---------------------
+
       - name: ✅ CI 완료 메시지
-        run: echo "🎉 Vite 기반 React 프로젝트 CI가 성공적으로 실행되었습니다!"
+        run: echo "🎉 Vite 기반 React 프로젝트 CI/CD가 성공적으로 실행되었습니다!"
