@@ -21,9 +21,11 @@ jobs:
 
       - name: 📥 의존성 설치
         run: npm install
+        working-directory: ./my-react-app
 
       - name: ⚙️ Vite 앱 빌드
         run: npm run build
+        working-directory: ./my-react-app
 
       - name: ✅ CI 완료 메시지
         run: echo "🎉 Vite 기반 React 프로젝트 CI가 성공적으로 실행되었습니다!"
