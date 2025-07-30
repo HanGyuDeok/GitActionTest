@@ -38,7 +38,7 @@ jobs:
         with:
           context: ./my-react-app
           push: true
-          tags: hangyudeok/your-react-app:${{ github.sha }}
+          tags: hangyudeok/my-react-app:${{ github.sha }}
         # 설명: my-react-app 디렉토리에서 도커 이미지 빌드 후 DockerHub에 푸시합니다.
         # 'tags'에 커밋 SHA를 넣어 이미지 버전을 고유하게 관리합니다.
 
