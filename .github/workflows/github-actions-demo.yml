@@ -1,18 +1,42 @@
-name: GitHub Actions Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+# 워크플로 이름 - GitHub Actions 탭에 표시됨
+name: GitHub Actions 데모
+
+# 실행 이름 - 실제 실행 시 표시됨 (예: "hong123이 GitHub Actions을 테스트하는 중 🚀")
+run-name: ${{ github.actor }}이 GitHub Actions을 테스트하는 중 🚀
+
+# 언제 실행할지 정의 (여기서는 push 발생 시 실행)
 on: [push]
+
+# 실행할 작업 목록 정의
 jobs:
   Explore-GitHub-Actions:
+    # 이 Job은 GitHub에서 제공하는 Ubuntu 서버에서 실행됨
     runs-on: ubuntu-latest
+
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Check out repository code
+      # Step 1: 어떤 이벤트로 실행되었는지 출력
+      - run: echo "🎉 이 작업은 '${{ github.event_name }}' 이벤트에 의해 자동으로 실행되었습니다."
+
+      # Step 2: 어떤 OS에서 실행 중인지 출력
+      - run: echo "🐧 이 작업은 GitHub에서 호스팅 중인 '${{ runner.os }}' 서버에서 실행되고 있습니다!"
+
+      # Step 3: 현재 브랜치와 저장소 이름 출력
+      - run: echo "🔎 현재 브랜치 이름은 '${{ github.ref }}'이고, 사용 중인 저장소는 '${{ github.repository }}'입니다."
+
+      # Step 4: 저장소 코드를 러너에 체크아웃 (복제)
+      - name: 저장소 코드 가져오기
         uses: actions/checkout@v4
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
+
+      # Step 5: 코드가 복제되었음을 출력
+      - run: echo "💡 '${{ github.repository }}' 저장소의 코드가 러너에 복제(clone)되었습니다."
+
+      # Step 6: 테스트할 준비가 되었음을 알림
+      - run: echo "🖥️ 이제 워크플로가 코드를 테스트할 준비가 완료되었습니다."
+
+      # Step 7: 현재 디렉토리(저장소 코드)의 파일 목록 출력
+      - name: 저장소 파일 목록 보기
         run: |
           ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+
+      # Step 8: 작업 상태 출력 (성공/실패 여부)
+      - run: echo "🍏 이 작업의 상태는 '${{ job.status }}'입니다."
