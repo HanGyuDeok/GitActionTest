@@ -31,7 +31,7 @@ jobs:
         run: npm run build
         working-directory: ./my-react-app
 
-      # --------------------- 추가된 부분 시작 ---------------------
+      # --------------------- 추가된 부분 시작 -----------------------
 
       - name: 🐳 Docker 빌드 및 푸시
         uses: docker/build-push-action@v3
