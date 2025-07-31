@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: react-container
-          image: hangyudeok/my-react-app:latest  # 본인의 도커허브 이미지로 변경
+          image: hangyudeok/my-react-app:c603efacded484a651e25c1ea9438d0044669372
           ports:
             - containerPort: 80
 
