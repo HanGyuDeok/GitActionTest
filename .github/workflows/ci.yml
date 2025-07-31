@@ -32,6 +32,11 @@ jobs:
         working-directory: ./my-react-app
 
       # --------------------- 추가된 부분 시작 -----------------------
+      - name: 🐳 Docker 로그인
+        uses: docker/login-action@v2
+        with:
+          username: hangyudeok
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: 🐳 Docker 빌드 및 푸시
         uses: docker/build-push-action@v3
