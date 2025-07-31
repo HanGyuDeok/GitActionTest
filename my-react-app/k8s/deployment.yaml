@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: react-container
-          image: hangyudeok/my-react-app:c603efacded484a651e25c1ea9438d0044669372
+          image: hangyudeok/my-react-app:4136e6541349f7a79422ca2fef8ba956e9cc651c
           ports:
             - containerPort: 80
 
